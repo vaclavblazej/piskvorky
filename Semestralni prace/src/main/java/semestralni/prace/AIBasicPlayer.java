@@ -1,15 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package semestralni.prace;
 
 /**
  * @author Zdenek
  */
-public class AI extends Player {
+public class AIBasicPlayer extends Player {
 
-    public AI(String name, int number, Window w) {
+    public AIBasicPlayer(String name, int number, Window w) {
         super(name, number, w);
     }
 
@@ -30,20 +26,14 @@ public class AI extends Player {
         char my;
         char his;
 
-        if (w.getWhoseTurn() == 1) {
-            my = 'O';
-            his = 'X';
-        } else {
-            my = 'X';
-            his = 'O';
-        }
+        my = w.getWhoseTurn().symbol;
+        his = (w.getWhoseTurn() == PlayerEnum.FIRST) ? PlayerEnum.SECOND.symbol : PlayerEnum.FIRST.symbol;
 
         for (int i = 0; i < a; i++) {
             for (int j = 0; j < a; j++) {
                 markedField[i][j] = 0;
             }
         }
-
 
         char symbol = his;
 

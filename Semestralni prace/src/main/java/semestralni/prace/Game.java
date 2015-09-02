@@ -1,46 +1,28 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package semestralni.prace;
 
+import java.util.Arrays;
+
 /**
- *
  * @author Zdenek
  */
 public class Game {
 
     private char[][] field;
     private int a;
-    private char player1 = 'O';
-    private char player2 = 'X';
 
     public Game(int size) {
-
         field = new char[size][size];
         this.a = size;
         for (int i = 0; i < a; i++) {
-            for (int j = 0; j < a; j++) {
-                field[i][j] = '.';
-
-            }
-
+            Arrays.fill(field[i], '.');
         }
-
     }
 
-    
-//    Tries to change the field according to your coordinates, if succesfully - returns 1, if not - returns 0
-    int doMove(int x, int y, int play) {
-
+    // Tries to change the field according to your coordinates, if successful - returns 1, if not - returns 0
+    int doMove(int x, int y, PlayerEnum play) {
         if (x >= 0 && x < this.a && y >= 0 && y < this.a && field[x][y] == '.') {
-            if (play == 1) {
-                field[x][y] = player1;
-                return 1;
-            } else {
-                field[x][y] = player2;
-                return 1;
-            }
+            field[x][y] = play.symbol;
+            return 1;
         } else {
             return 0;
         }
@@ -50,17 +32,12 @@ public class Game {
         return field;
     }
 
-    
-    // checks if player who played last wins or not, if so - returns his number and marks winning coordinates with 'w'
-    int winnerCheck(int a) {
-        int follow;
-        char symbol;
-        if (a == 1) {
-            symbol = player1;
-        } else {
-            symbol = player2;
-        }
 
+    // checks if player who played last wins or not, if so - returns his number and marks winning coordinates with 'window'
+    int winnerCheck(PlayerEnum player) {
+        int follow;
+        char symbol = player.symbol;
+        int a = player == PlayerEnum.FIRST ? 1 : 2;
 
         for (int i = 0; i < this.a; i++) {
             follow = 0;
@@ -101,7 +78,6 @@ public class Game {
         }
         follow = 0;
 
-
         for (int i = 2; i < this.a - 2; i++) {
             for (int j = 2; j < this.a - 2; j++) {
                 if (field[i][j] == field[i + 1][j + 1] && field[i][j] == field[i + 2][j + 2] && field[i][j] == field[i - 1][j - 1] && field[i][j] == field[i - 2][j - 2] && field[i][j] == symbol) {
@@ -137,13 +113,7 @@ public class Game {
             }
         }
 
-
-
         return 0;
-    }
-
-    public void setA(int a) {
-        this.a = a;
     }
 
     public int getA() {
@@ -163,5 +133,4 @@ public class Game {
     public void setField(char[][] field) {
         this.field = field;
     }
-
 }

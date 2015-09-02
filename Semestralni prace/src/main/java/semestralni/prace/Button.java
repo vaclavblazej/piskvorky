@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package semestralni.prace;
 
 import java.awt.Image;
@@ -43,20 +39,11 @@ public class Button extends JButton implements ActionListener {
         Image myImage = null;
         ImageIcon myIcon;
 
-        if (w.getWhoseTurn() == 1) {
-            URL localUrl = Button.class.getResource("/O.jpg");
-            try {
-                myImage = ImageIO.read(localUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            URL localUrl = Button.class.getResource("/X.jpg");
-            try {
-                myImage = ImageIO.read(localUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        URL localUrl = Button.class.getResource("/" + w.getWhoseTurn().symbol + ".jpg");
+        try {
+            myImage = ImageIO.read(localUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         myIcon = new ImageIcon(myImage);

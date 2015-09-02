@@ -1,21 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package semestralni.prace;
 
-import java.awt.Color;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 /**
- *
  * @author Zdenek
  */
 public class Window extends JFrame {
@@ -27,31 +20,26 @@ public class Window extends JFrame {
     ButtonField bf;
     Player p1;
     Player p2;
-    private int whoseTurn = 1;
+    private PlayerEnum whoseTurn = PlayerEnum.FIRST;
     private int gameStatus = 0;
     Menu m;
     private boolean filledWithAL = false;
-    //Starter s;
 
-    public Window(int a, String name1, String name2) {
+    public Window(int a, String firstPlayerName, String secondPlayerName) {
         super("Piškvorky");
         this.setSize(1000, 688);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         this.setBackground(Color.pink);
         g = new Game(a);
         bf = new ButtonField(this);
         this.add(bf);
-        p1 = new PCPlayer(name1, 1, this);
-        p2 = new PCPlayer(name2, 2, this);
-        m = new Menu(this, 660, 0, 340, 688, name1, name2);
+        p1 = new PCPlayer(firstPlayerName, 1, this);
+        p2 = new PCPlayer(secondPlayerName, 2, this);
+        m = new Menu(this, 660, 0, 340, 688, firstPlayerName, secondPlayerName);
         this.add(m);
         this.setBackground(Color.pink);
-        //this.s = s;
-
-
-
     }
 
     public void setFilledWithAL(boolean filledWithAL) {
@@ -62,21 +50,12 @@ public class Window extends JFrame {
         return filledWithAL;
     }
 
-    public int getWhoseTurn() {
+    public PlayerEnum getWhoseTurn() {
         return whoseTurn;
     }
 
-    public void setWhoseTurn(int whoseTurn) {
+    public void setWhoseTurn(PlayerEnum whoseTurn) {
         this.whoseTurn = whoseTurn;
-
-    }
-
-    public void setP1(Player p1) {
-        this.p1 = p1;
-    }
-
-    public void setP2(Player p2) {
-        this.p2 = p2;
     }
 
     public int getGameStatus() {
@@ -88,12 +67,12 @@ public class Window extends JFrame {
     }
 
     public void switchPlayer() {
-        if (whoseTurn == 1) {
-            setWhoseTurn(2);
+        if (whoseTurn == PlayerEnum.FIRST) {
+            setWhoseTurn(PlayerEnum.SECOND);
             m.name1.setForeground(Color.black);
             m.name2.setForeground(Color.blue);
         } else {
-            setWhoseTurn(1);
+            setWhoseTurn(PlayerEnum.FIRST);
             m.name1.setForeground(Color.blue);
             m.name2.setForeground(Color.black);
         }
@@ -103,7 +82,7 @@ public class Window extends JFrame {
         Button[][] helper = bf.getField();
         char[][] helper2 = g.getField();
         Image myImage = null;
-        ImageIcon myIcon;
+        ImageIcon myIcon = null;
         int helper3;
 
         if (gameStatus == 3) {
@@ -135,9 +114,9 @@ public class Window extends JFrame {
             m.score2.setText(Integer.toString(helper3));
 
         }
-        myIcon = new ImageIcon(myImage);
-
-
+        if (myImage != null) {
+            myIcon = new ImageIcon(myImage);
+        }
 
         for (int k = 0; k < g.getA(); k++) {
             for (int l = 0; l < g.getA(); l++) {
@@ -173,9 +152,8 @@ public class Window extends JFrame {
                     if (getGameStatus() != 0) {
                         break;
                     }
-                    if (whoseTurn == 1) {
+                    if (whoseTurn == PlayerEnum.FIRST) {
                         p1.makeMove();
-
                     } else {
                         p2.makeMove();
                     }

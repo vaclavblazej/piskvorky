@@ -1,19 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package semestralni.prace;
 
-import java.awt.GridLayout;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 /**
  * @author Zdenek
@@ -75,7 +69,7 @@ public class ButtonField extends JPanel {
                     fw.write(charField[i][j]);
                 }
             }
-            fw.write(w.getWhoseTurn());
+            fw.write(w.getWhoseTurn() == PlayerEnum.FIRST ? 1 : 0);
             fw.write((int) Double.parseDouble(w.m.score1.getText()));
             fw.write((int) Double.parseDouble(w.m.score2.getText()));
             fw.write(w.p1.getName());
@@ -110,10 +104,10 @@ public class ButtonField extends JPanel {
                 }
             }
             w.g.setField(charField);
-            whoseTurn = (int) fr.read();
-            w.setWhoseTurn(whoseTurn);
-            int helper1 = (int) fr.read();
-            int helper2 = (int) fr.read();
+            whoseTurn = fr.read();
+            w.setWhoseTurn(whoseTurn == 1 ? PlayerEnum.FIRST : PlayerEnum.SECOND);
+            int helper1 = fr.read();
+            int helper2 = fr.read();
 
             String score1 = "";
             String score2 = "";

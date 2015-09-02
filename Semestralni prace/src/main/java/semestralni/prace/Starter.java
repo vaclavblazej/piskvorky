@@ -1,67 +1,49 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package semestralni.prace;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 /**
- *
  * @author Zdenek
  */
 public class Starter extends JFrame {
 
-    JTextField name1;
-    JTextField name2;
-    JButton start;
-    Window w;
+    JTextField firstPlayerName;
+    JTextField secondPlayerName;
+    JButton startButton;
+    Window window;
 
     public Starter() {
         super("Piškvorky");
         this.setLayout(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 200);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setPreferredSize(new Dimension(300, 200));
         this.getContentPane().setBackground(Color.PINK);
 
-        name1 = new JTextField();
-        name1.setText("Player 1");
-        name1.setBounds(35, 20, 100, 50);
-        this.add(name1);
+        firstPlayerName = new JTextField();
+        firstPlayerName.setText("Player 1");
+        firstPlayerName.setBounds(35, 20, 100, 50);
+        this.add(firstPlayerName);
 
-        name2 = new JTextField();
-        name2.setText("Player 2");
-        name2.setBounds(155, 20, 100, 50);
-        this.add(name2);
+        secondPlayerName = new JTextField();
+        secondPlayerName.setText("Player 2");
+        secondPlayerName.setBounds(155, 20, 100, 50);
+        this.add(secondPlayerName);
 
-        start = new JButton();
-        start.setText("START");
-        start.setBounds(90, 90, 100, 50);
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    start();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Starter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        this.add(start);
+        startButton = new JButton();
+        startButton.setText("START");
+        startButton.setBounds(90, 90, 100, 50);
+        startButton.addActionListener(ae -> start());
+        this.add(startButton);
+        this.setVisible(true);
+        this.pack();
+        this.setLocationRelativeTo(null);
     }
 
-    public void start() throws InterruptedException {
-        w = new Window(30, name1.getText(), name2.getText());
-        w.setVisible(true);
+    public void start() {
+        window = new Window(30, firstPlayerName.getText(), secondPlayerName.getText());
+        window.setVisible(true);
         this.dispose();
-        w.run();
-
+        window.run();
     }
 }

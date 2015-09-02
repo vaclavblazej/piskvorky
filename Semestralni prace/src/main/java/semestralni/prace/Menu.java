@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package semestralni.prace;
 
 import java.awt.Color;
@@ -16,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- *
  * @author Zdenek
  */
 public class Menu extends JPanel {
@@ -147,10 +142,6 @@ public class Menu extends JPanel {
                 }
             }
         });
-
-
-
-
     }
 
     public void doContinue() throws InterruptedException {
@@ -194,7 +185,7 @@ public class Menu extends JPanel {
             w.g.restart();
             score1.setText("0");
             score2.setText("0");
-            w.setWhoseTurn(1);
+            w.setWhoseTurn(PlayerEnum.FIRST);
             w.setFilledWithAL(false);
 
             w.run();
@@ -206,7 +197,7 @@ public class Menu extends JPanel {
     public void computer1() {
 
         if (w.p1 instanceof PCPlayer) {
-            w.p1 = new AI(w.p1.getName(), w.p1.getNumber(), w);
+            w.p1 = new AIBasicPlayer(w.p1.getName(), w.p1.getNumber(), w);
             autoplay1.setBackground(Color.yellow);
         } else {
             autoplay1.setBackground(newGame.getBackground());
@@ -218,7 +209,7 @@ public class Menu extends JPanel {
 
     public void computer2() {
         if (w.p2 instanceof PCPlayer) {
-            w.p2 = new AI(w.p2.getName(), w.p2.getNumber(), w);
+            w.p2 = new AIBasicPlayer(w.p2.getName(), w.p2.getNumber(), w);
             autoplay2.setBackground(Color.yellow);
 
         } else {
